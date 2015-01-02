@@ -60,33 +60,36 @@ class HookMyInsertTags extends \Frontend
  
         if ($arrSplit[0] == 'reservation') {
             if (isset($arrSplit[1]) && $arrSplit[1] == 'salutation') {
-                $strSalutation = ($this->Input->post('salutation') === 'male') ? $GLOBALS['TL_LANG']['MSC']['dearSir'].' '.$this->Input->post('lastname') : 
-                    'Sehr geehrte Frau '.$this->Input->post('lastname');
+                $strSalutation = (\Input::post('salutation') === 'male') ? $GLOBALS['TL_LANG']['MSC']['dearSir'].' '.\Input::post('lastname') : 
+                    'Sehr geehrte Frau '.\Input::post('lastname');
                 return $strSalutation;    
             }             
             if (isset($arrSplit[1]) && $arrSplit[1] == 'firstname') {
-                return $this->Input->post('firstname');    
+                return \Input::post('firstname');    
             }            
             if (isset($arrSplit[1]) && $arrSplit[1] == 'lastname') {
-                return $this->Input->post('lastname');    
+                return \Input::post('lastname');    
             }        
             if (isset($arrSplit[1]) && $arrSplit[1] == 'address') {
-                return $this->Input->post('address');    
+                return \Input::post('street').' '.\Input::post('postcode').' / '.\Input::post('city').' ['.\Input::post('country').']';    
             }           
             if (isset($arrSplit[1]) && $arrSplit[1] == 'postcode') {
-                return $this->Input->post('postcode');    
+                return \Input::post('postcode');    
             }           
             if (isset($arrSplit[1]) && $arrSplit[1] == 'city') {
-                return $this->Input->post('city');    
-            }            
+                return \Input::post('city');    
+            }
+            if (isset($arrSplit[1]) && $arrSplit[1] == 'country') {
+                return \Input::post('country');    
+            }  
             if (isset($arrSplit[1]) && $arrSplit[1] == 'email') {
-                return $this->Input->post('email');    
+                return \Input::post('email');    
             }  
             if (isset($arrSplit[1]) && $arrSplit[1] == 'phone') {
-                return $this->Input->post('phone') ? $this->Input->post('phone') : '-';    
+                return \Input::post('phone') ? \Input::post('phone') : '-';    
             }            
             if (isset($arrSplit[1]) && $arrSplit[1] == 'remarks') {
-                return $this->Input->post('remarks') ? $this->Input->post('remarks') : '-';    
+                return \Input::post('remarks') ? \Input::post('remarks') : '-';    
             }            
             if (isset($arrSplit[1]) && $arrSplit[1] == 'arrival') {
                 return $objSsession->get('arrival');    

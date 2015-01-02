@@ -234,15 +234,15 @@ class ModuleRoomReservation extends \Module
             
             $this->Template->objWidgetLastName = $objWidgetLastName;
             
-            $objWidgetAddress            = new \FormTextField();
-            $objWidgetAddress->id        = 'address';
-            $objWidgetAddress->label     = $GLOBALS['TL_LANG']['MSC']['strFormAddress'];
-            $objWidgetAddress->name      = 'address';
-            $objWidgetAddress->mandatory = true;
-            $objWidgetAddress->rgxp      = 'alnum';
-            $objWidgetAddress->value     = \Input::post('address');
+            $objWidgetStreet            = new \FormTextField();
+            $objWidgetStreet->id        = 'street';
+            $objWidgetStreet->label     = $GLOBALS['TL_LANG']['MSC']['strFormStreet'];
+            $objWidgetStreet->name      = 'street';
+            $objWidgetStreet->mandatory = true;
+            $objWidgetStreet->rgxp      = 'alnum';
+            $objWidgetStreet->value     = \Input::post('street');
             
-            $this->Template->objWidgetAddress = $objWidgetAddress;          
+            $this->Template->objWidgetStreet = $objWidgetStreet;          
             
             $objWidgetPostCode            = new \FormTextField();
             $objWidgetPostCode->id        = 'postcode';
@@ -324,7 +324,7 @@ class ModuleRoomReservation extends \Module
             $objWidgetSalutation->validate(); 
             $objWidgetFirstName->validate(); 
             $objWidgetLastName->validate();
-            $objWidgetAddress->validate();
+            $objWidgetStreet->validate();
             $objWidgetPostCode->validate(); 
             $objWidgetCity->validate();
             $objWidgetCountry->validate();
@@ -333,7 +333,7 @@ class ModuleRoomReservation extends \Module
             $objWidgetRemarks->validate();
             $objWidgetConfirmation->validate();  
             
-            if (!$objWidgetSalutation->hasErrors() && !$objWidgetFirstName->hasErrors() && !$objWidgetLastName->hasErrors() && !$objWidgetAddress->hasErrors() && !$objWidgetPostCode->hasErrors() && !$objWidgetCity->hasErrors() && !$objWidgetCountry->hasErrors() && !$objWidgetEmail->hasErrors() && !$objWidgetPhone->hasErrors() && !$objWidgetRemarks->hasErrors() && !$objWidgetConfirmation->hasErrors()) {
+            if (!$objWidgetSalutation->hasErrors() && !$objWidgetFirstName->hasErrors() && !$objWidgetLastName->hasErrors() && !$objWidgetStreet->hasErrors() && !$objWidgetPostCode->hasErrors() && !$objWidgetCity->hasErrors() && !$objWidgetCountry->hasErrors() && !$objWidgetEmail->hasErrors() && !$objWidgetPhone->hasErrors() && !$objWidgetRemarks->hasErrors() && !$objWidgetConfirmation->hasErrors()) {
 
                 $intCurrentTstamp  = $objSsession->get('tstampArrival');
                 $arrTypesCount     = $objSsession->get('typesCount');
@@ -365,7 +365,7 @@ class ModuleRoomReservation extends \Module
                             $objSsession->get('rooms'), 
                             \Input::post('lastname'), 
                             \Input::post('firstname'), 
-                            \Input::post('address'), 
+                            \Input::post('street').' '.\Input::post('postcode').' / '.\Input::post('city').' ['.\Input::post('country').']', 
                             \Input::post('postcode'), 
                             \Input::post('country'), 
                             \Input::post('phone'), 
