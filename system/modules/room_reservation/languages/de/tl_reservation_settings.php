@@ -75,7 +75,7 @@ $GLOBALS['TL_LANG']['tl_reservation_settings']['smtp_legend']       = 'SMTP-Eins
  */
 $GLOBALS['TL_LANG']['MSC']['editRecord']                            = 'E-Mail-Einstellungen bearbeiten';  
 $GLOBALS['TL_LANG']['tl_reservation_settings']['default_subject']   = 'Ihre Reservierung beim Hotel Mustermann';
-$GLOBALS['TL_LANG']['tl_reservation_settings']['default_html_text'] = '<p>{{reservation::Anrede],<br><br>
+$GLOBALS['TL_LANG']['tl_reservation_settings']['default_html_text'] = '<p>{{reservation::salutation}},<br><br>
     vielen Dank für Ihre Reservierung im Hotel Mustermann.
     Gern bestätigen wir Ihre Online-Reservierung, wie folgt:<br><br>
     Vorname: {{reservation::firstname}}<br>
@@ -87,7 +87,7 @@ $GLOBALS['TL_LANG']['tl_reservation_settings']['default_html_text'] = '<p>{{rese
     Abreise: {{reservation::departure}}<br>
     Zimmer: {{reservation::rooms}}<br>
     Bemerkungen: {{reservation::remarks}}<br><br>
-    Daraus ergibt sich ein Gesamtpreis in Höhe von {{reservation::total}} EUR {{reservation::Durchschnittspreis}. Der Zimmerpreis versteht sich inklusive Frühstück, Service und der gesetzlichen Mehrwertsteuer.<br>
+    Daraus ergibt sich ein Gesamtpreis in Höhe von {{reservation::total}}. Der Zimmerpreis versteht sich inklusive Frühstück, Service und der gesetzlichen Mehrwertsteuer.<br>
     Bitte übermitteln Sie uns Ihre Kreditkarten-Details, um Ihre Reservierung zu garantieren.<br><br>
     Eine kostenlose Stornierung dieser Reservierung ist bis 24 Stunden vor Anreise möglich.<br>
     Änderungen oder Stornierungen wollen Sie dem Hotel bitte per E-Mail oder Telefax übermitteln.<br><br>
