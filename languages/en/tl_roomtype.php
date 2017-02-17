@@ -34,7 +34,7 @@
  * Fields
  */
 $GLOBALS['TL_LANG']['tl_roomtype']['roomtype']    = array('Room type', 'Please enter the description of the room type.'); 
-$GLOBALS['TL_LANG']['tl_roomtype']['maxcount']    = array('Maximum number of rooms', 'Bitte geben Sie das Maximum möglicher Online-Reservierungen an.'); 
+$GLOBALS['TL_LANG']['tl_roomtype']['maxcount']    = array('Maximum number of rooms', 'Please enter the maximum number of online reservations.');
 $GLOBALS['TL_LANG']['tl_roomtype']['description'] = array('Description', 'Here you can enter a short description for the room type.');
 $GLOBALS['TL_LANG']['tl_roomtype']['published']   = array('Publish room type', 'Show the room type in the frontend.');
 $GLOBALS['TL_LANG']['tl_roomtype']['start']       = array('Show from', 'Show the room type from this day in the frontend.');

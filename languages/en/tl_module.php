@@ -33,7 +33,7 @@
 /**
  * Fields
  */
-$GLOBALS['TL_LANG']['tl_module']['res_roomtypes'] = array('Zimmertyp', 'Please choose at least one room type.');
+$GLOBALS['TL_LANG']['tl_module']['res_roomtypes'] = array('Room type', 'Please choose at least one room type.');
 
 /**
  * Legends
