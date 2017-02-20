@@ -1,5 +1,5 @@
 <!-- indexer::stop -->
-<?php $objSsession = \Session::getInstance(); ?>
+<?php $objSession = \Session::getInstance(); ?>
 <div class="<?php echo $this->class; ?> block"<?php echo $this->cssID; ?><?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
 <?php if ($this->headline): ?>
 
@@ -10,23 +10,23 @@
 <p class="info"><?php echo $this->infoMessage ?><br><br>
 <a href="/"><?php echo $GLOBALS['TL_LANG']['MSC']['backToStart']; ?></a><br><br>
 
-<?php elseif (\Input::get('FORM_PAGE')==='page2' && !$this->infoMessage && $objSsession->get('arrival')) : ?>
+<?php elseif (\Input::get('FORM_PAGE')==='page2' && !$this->infoMessage && $objSession->get('arrival')) : ?>
 <table id="formdata">
     <tr>
         <td class="label"><?php echo $GLOBALS['TL_LANG']['MSC']['dateOfArrival']; ?></td>
-        <td class="value"><?php echo $objSsession->get('arrival'); ?></td>
+        <td class="value"><?php echo $objSession->get('arrival'); ?></td>
     </tr>
         <td class="label"><?php echo $GLOBALS['TL_LANG']['MSC']['dateOfDeparture']; ?></td>
-        <td class="value"><?php echo $objSsession->get('departure'); ?></td>
+        <td class="value"><?php echo $objSession->get('departure'); ?></td>
         
     <tr> 
         <td class="label"><?php echo $GLOBALS['TL_LANG']['MSC']['rooms']; ?></td>
         <td class="value">
-        <?php echo implode('<br>', $objSsession->get('rooms')); ?>
+        <?php echo implode('<br>', $objSession->get('rooms')); ?>
         </td>
     </tr>
     <tr>
-        <td class="label"><?php echo $GLOBALS['TL_LANG']['MSC']['total']; ?></td><td class="value"><?php echo $objSsession->get('priceMessage') ?></td>    
+        <td class="label"><?php echo $GLOBALS['TL_LANG']['MSC']['total']; ?></td><td class="value"><?php echo $objSession->get('priceMessage') ?></td>
     </tr>
 </table>
 <br><br>

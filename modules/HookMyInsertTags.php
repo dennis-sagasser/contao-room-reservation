@@ -55,7 +55,7 @@ class HookMyInsertTags extends \Frontend
      */
     public function myReplaceInsertTags($strTag)
     {
-        $objSsession = Session::getInstance();
+        $objSession = Session::getInstance();
         $arrSplit    = explode('::', $strTag);
  
         if ($arrSplit[0] == 'reservation') {
@@ -92,16 +92,16 @@ class HookMyInsertTags extends \Frontend
                 return \Input::post('remarks') ? \Input::post('remarks') : '-';    
             }            
             if (isset($arrSplit[1]) && $arrSplit[1] == 'arrival') {
-                return $objSsession->get('arrival');    
+                return $objSession->get('arrival');
             }           
             if (isset($arrSplit[1]) && $arrSplit[1] == 'departure') {
-                return $objSsession->get('departure');    
+                return $objSession->get('departure');
             }
             if (isset($arrSplit[1]) && $arrSplit[1] == 'rooms') {
-                return is_array($objSsession->get('rooms')) ? implode(', ', $objSsession->get('rooms')) : $objSsession->get('rooms');    
+                return is_array($objSession->get('rooms')) ? implode(', ', $objSession->get('rooms')) : $objSession->get('rooms');
             } 
             if (isset($arrSplit[1]) && $arrSplit[1] == 'total') {
-                return $objSsession->get('priceMessage');    
+                return $objSession->get('priceMessage');
             }
         }
         return false;

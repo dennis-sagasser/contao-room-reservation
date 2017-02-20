@@ -70,7 +70,7 @@ class ModuleRoomReservation extends \Module
      */
     protected function compile()
     {
-        $objSsession = \Session::getInstance();
+        $objSession = \Session::getInstance();
         
         $this->loadLanguageFile('tl_room_reservation');
 
@@ -191,13 +191,13 @@ class ModuleRoomReservation extends \Module
                 $this->Template->arrOverview  = $arrOverview;
                 $arrTypesCount                = array_combine($arrRoomtypes, $arrCountRooms);
                 
-                $objSsession->set('arrival', \Input::post('arrival'));
-                $objSsession->set('departure', \Input::post('departure'));
-                $objSsession->set('rooms', $arrRooms);
-                $objSsession->set('priceMessage', $this->Template->priceMessage);
-                $objSsession->set('typesCount', $arrTypesCount);
-                $objSsession->set('tstampArrival', $intTstampArrival);
-                $objSsession->set('tstampDeparture', $intTstampDeparture);                 
+                $objSession->set('arrival', \Input::post('arrival'));
+                $objSession->set('departure', \Input::post('departure'));
+                $objSession->set('rooms', $arrRooms);
+                $objSession->set('priceMessage', $this->Template->priceMessage);
+                $objSession->set('typesCount', $arrTypesCount);
+                $objSession->set('tstampArrival', $intTstampArrival);
+                $objSession->set('tstampDeparture', $intTstampDeparture);
             } else {
                 $this->Template->errorMessage = $GLOBALS['TL_LANG']['MSC']['reservationNotPossible'];               
             }
@@ -335,11 +335,11 @@ class ModuleRoomReservation extends \Module
             
             if (!$objWidgetSalutation->hasErrors() && !$objWidgetFirstName->hasErrors() && !$objWidgetLastName->hasErrors() && !$objWidgetStreet->hasErrors() && !$objWidgetPostCode->hasErrors() && !$objWidgetCity->hasErrors() && !$objWidgetCountry->hasErrors() && !$objWidgetEmail->hasErrors() && !$objWidgetPhone->hasErrors() && !$objWidgetRemarks->hasErrors() && !$objWidgetConfirmation->hasErrors()) {
 
-                $intCurrentTstamp  = $objSsession->get('tstampArrival');
-                $arrTypesCount     = $objSsession->get('typesCount');
+                $intCurrentTstamp  = $objSession->get('tstampArrival');
+                $arrTypesCount     = $objSession->get('typesCount');
                 $arrTypesCountKeys = array_keys($arrTypesCount);
                 
-                while ($intCurrentTstamp < $objSsession->get('tstampDeparture')) {
+                while ($intCurrentTstamp < $objSession->get('tstampDeparture')) {
                     $strCurrentDate = date('Y-m-d', $intCurrentTstamp);
                     foreach ($arrTypesCountKeys as $intRoomtype) {
                         $objSetRoomCount = $this->Database->prepare("
@@ -359,10 +359,10 @@ class ModuleRoomReservation extends \Module
                     INSERT INTO tl_reservation_list 
                     (arrival, departure, tstamp, rooms, lastname, firstname, address, postcode, country, phone, email, remarks)
                     VALUES(%d, %d, %d, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
-                        ->execute($objSsession->get('tstampArrival'), 
-                            $objSsession->get('tstampDeparture'), 
+                        ->execute($objSession->get('tstampArrival'),
+                            $objSession->get('tstampDeparture'),
                             time(),
-                            $objSsession->get('rooms'), 
+                            $objSession->get('rooms'),
                             \Input::post('lastname'), 
                             \Input::post('firstname'), 
                             \Input::post('street').' '.\Input::post('postcode').' / '.\Input::post('city').' ['.\Input::post('country').']', 
@@ -372,13 +372,13 @@ class ModuleRoomReservation extends \Module
                             \Input::post('email'), 
                             \Input::post('remarks'));
 
-                $objSsession->remove('tstampArrival');
-                $objSsession->remove('tstampDeparture');
-                $objSsession->remove('typesCount');
-                $objSsession->remove('arrival');
-                $objSsession->remove('departure');            
-                $objSsession->remove('priceMessage');
-                $objSsession->remove('rooms');
+                $objSession->remove('tstampArrival');
+                $objSession->remove('tstampDeparture');
+                $objSession->remove('typesCount');
+                $objSession->remove('arrival');
+                $objSession->remove('departure');
+                $objSession->remove('priceMessage');
+                $objSession->remove('rooms');
             }
         }
     }
