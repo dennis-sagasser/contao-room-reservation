@@ -42,7 +42,7 @@ $GLOBALS['BE_MOD']['room_reservation'] = array(
         'tables'       => array('tl_roomtype', 'tl_room_occupancy'),
         //'callback'     => 'ClassName',                                                                                                                     
         'icon'         => 'system/modules/room_reservation/assets/images/roomtypes16.png',                                                                                       
-        'stylesheet'   => 'system/modules/room_reservation/assets/css/layout.css',
+        'stylesheet'   => 'system/modules/room_reservation/assets/css/layout.min.css',
         'javascript'   => 'system/modules/room_reservation/assets/js/datepicker.js'
     ),
     'reservation_list' => array(

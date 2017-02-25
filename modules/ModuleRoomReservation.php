@@ -145,7 +145,7 @@ class ModuleRoomReservation extends \Module
             $intTstampArrival   = $objArrivalDate->tstamp; 
             $intTstampDeparture = $objDepartureDate->tstamp; 
             $strStartDate       = date('Y-m-d', $intTstampArrival);
-            $strEndtDate        = date('Y-m-d', $intTstampDeparture);
+            $strEndDate        = date('Y-m-d', $intTstampDeparture);
             $intDifference      = ($intTstampDeparture - $intTstampArrival) / 86400;          
             $intTotal           = 0;
                         
@@ -163,7 +163,7 @@ class ModuleRoomReservation extends \Module
                         WHERE date >= ? AND date < ?
                         AND pid = ?
                         AND o.pid = t.id")
-                            ->execute(intval(\Input::post($intRoomtype)), $strStartDate, $strEndtDate, $intRoomtype)->fetchAssoc();
+                            ->execute(intval(\Input::post($intRoomtype)), $strStartDate, $strEndDate, $intRoomtype)->fetchAssoc();
                 ($arrResultRow['minCount'] === null) ? $objWidgetCheckboxes->addError(sprintf($GLOBALS['TL_LANG']['MSC']['notEnoughRoomsError'])) :
                     (intval($arrResultRow['minCount']) === 0) ? $objWidgetCheckboxes->addError(sprintf($GLOBALS['TL_LANG']['MSC']['noRoomsForRoomtype'], $arrResultRow['type'])) :
                         (intval($arrResultRow['countAvailableNights']) !== $intDifference)? $objWidgetCheckboxes->addError(sprintf($GLOBALS['TL_LANG']['MSC']['notEnoughRoomsForTypeError'], $arrResultRow['type'])) : '';
@@ -175,7 +175,7 @@ class ModuleRoomReservation extends \Module
                                         WHERE date >= ? AND date < ?
                                         AND pid = ?
                                         AND o.pid = t.id")
-                                            ->execute(intval(\Input::post($intRoomtype)), $strStartDate, $strEndtDate, $intRoomtype)->fetchAllAssoc();
+                                            ->execute(intval(\Input::post($intRoomtype)), $strStartDate, $strEndDate, $intRoomtype)->fetchAllAssoc();
 
                 $arrOverview[]   = $arrResult;                 
                 $arrRooms[]      = \Input::post($intRoomtype).' '.$arrResult[0]['roomtype'];
