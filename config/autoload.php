@@ -16,9 +16,10 @@
  */
 ClassLoader::addClasses(array
 (
-	// Modules
-	'Contao\ModuleRoomReservation' => 'system/modules/room_reservation/modules/ModuleRoomReservation.php',
-	'Contao\HookMyInsertTags'      => 'system/modules/room_reservation/modules/HookMyInsertTags.php',
+    // Modules
+    'Contao\ModuleRoomReservation' => 'system/modules/room_reservation/modules/ModuleRoomReservation.php',
+    'Contao\HookMyInsertTags'      => 'system/modules/room_reservation/modules/HookMyInsertTags.php',
+    'Contao\HookMyBackendTemplate' => 'system/modules/room_reservation/modules/HookMyBackendTemplate.php',
 ));
 
 
@@ -27,5 +28,5 @@ ClassLoader::addClasses(array
  */
 TemplateLoader::addFiles(array
 (
-	'mod_reservation_form' => 'system/modules/room_reservation/templates',
+    'mod_reservation_form' => 'system/modules/room_reservation/templates',
 ));
