@@ -3,11 +3,9 @@
 /**
  * Contao Open Source CMS
  *
- * Copyright (c) 2005-2014 Leo Feyer
+ * Copyright (c) 2005-2017 Leo Feyer
  *
- * @package Room_reservation
- * @link    https://contao.org
- * @license http://www.gnu.org/licenses/lgpl-3.0.html LGPL
+ * @license LGPL-3.0+
  */
 
 
@@ -16,10 +14,17 @@
  */
 ClassLoader::addClasses(array
 (
-    // Modules
-    'Contao\ModuleRoomReservation' => 'system/modules/room_reservation/modules/ModuleRoomReservation.php',
-    'Contao\HookMyInsertTags'      => 'system/modules/room_reservation/modules/HookMyInsertTags.php',
-    'Contao\HookMyBackendTemplate' => 'system/modules/room_reservation/modules/HookMyBackendTemplate.php',
+	// Modules
+	'Contao\ModuleRoomReservation' => 'system/modules/room_reservation/modules/ModuleRoomReservation.php',
+
+	// Classes
+	'tl_room_occupancy'            => 'system/modules/room_reservation/classes/tl_room_occupancy.php',
+	'tl_roomtype'                  => 'system/modules/room_reservation/classes/tl_roomtype.php',
+	'tl_reservation_settings'      => 'system/modules/room_reservation/classes/tl_reservation_settings.php',
+
+	// Library
+	'Contao\HookMyBackendTemplate' => 'system/modules/room_reservation/library/RoomReservation/HookMyBackendTemplate.php',
+	'Contao\HookMyInsertTags'      => 'system/modules/room_reservation/library/RoomReservation/HookMyInsertTags.php',
 ));
 
 
@@ -28,5 +33,5 @@ ClassLoader::addClasses(array
  */
 TemplateLoader::addFiles(array
 (
-    'mod_reservation_form' => 'system/modules/room_reservation/templates',
+	'mod_reservation_form' => 'system/modules/room_reservation/templates',
 ));
