@@ -60,6 +60,7 @@ $GLOBALS['TL_LANG']['MSC']['strFormCountry']             = 'Land';
 $GLOBALS['TL_LANG']['MSC']['strFormEmail']               = 'E-Mail';
 $GLOBALS['TL_LANG']['MSC']['strFormPhone']               = 'Telefon';
 $GLOBALS['TL_LANG']['MSC']['strFormRemarks']             = 'Bemerkungen';
+$GLOBALS['TL_LANG']['MSC']['strFormCaptcha']             = 'Sicherheitsfrage';
 $GLOBALS['TL_LANG']['MSC']['strFormConfirmation']        = 'Bestätigung';
 $GLOBALS['TL_LANG']['MSC']['strFormConfirmationText']    = 'Hiermit bestätige ich die verbindliche Reservierung.';
 $GLOBALS['TL_LANG']['MSC']['strFormReservationSubmit']   = 'Verbindlich reservieren';

@@ -60,6 +60,7 @@ $GLOBALS['TL_LANG']['MSC']['strFormCountry']             = 'Country';
 $GLOBALS['TL_LANG']['MSC']['strFormEmail']               = 'E-Mail';
 $GLOBALS['TL_LANG']['MSC']['strFormPhone']               = 'Phone number';
 $GLOBALS['TL_LANG']['MSC']['strFormRemarks']             = 'Remarks';
+$GLOBALS['TL_LANG']['MSC']['strFormCaptcha']             = 'Security question';
 $GLOBALS['TL_LANG']['MSC']['strFormConfirmation']        = 'Confirmation';
 $GLOBALS['TL_LANG']['MSC']['strFormConfirmationText']    = 'I hereby confirm the binding reservation.';
 $GLOBALS['TL_LANG']['MSC']['strFormReservationSubmit']   = 'Binding reservation';
