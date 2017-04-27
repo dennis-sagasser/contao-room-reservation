@@ -1,0 +1,21 @@
+<!-- indexer::stop -->
+<?php $this->extend('mod_room_reservation_form'); ?>
+
+<?php $this->block('header'); ?>
+<?php $this->parent(); ?>
+<?php $this->endblock(); ?>
+
+<?php $this->block('overview'); ?>
+
+<p class="info">
+    <?= $this->infoMessage ?>
+    <br><br>
+    <a href="/"><?= $GLOBALS['TL_LANG']['MSC']['room_reservation']['backToStart']; ?></a>
+    <br><br>
+</p>
+
+<?php $this->endblock(); ?>
+
+<?php $this->block('form'); ?>
+<?php $this->endblock(); ?>
+<!-- indexer::continue -->

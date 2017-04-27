@@ -30,36 +30,28 @@
  * @link      https://contao.org
  */
 
-$GLOBALS['BE_MOD']['room_reservation'] = array(
-    'config'           => array(
-        'tables' => array('tl_reservation_settings'),
-        //'callback'     => 'ClassName',                                                                                                                     
+$GLOBALS['BE_MOD']['room_reservation'] = [
+    'room_config' => [
+        'tables' => ['tl_room_settings'],
         'icon'   => 'system/modules/room_reservation/assets/images/settings16.png',
-        //'stylesheet'   => 'path/to/stylesheet.css',
-        //'javascript'   => 'path/to/javascript.js'
-    ),
-    'roomtypes'        => array(
-        'tables'     => array('tl_roomtype', 'tl_room_occupancy'),
-        //'callback'     => 'ClassName',                                                                                                                     
+    ],
+    'room_types'  => [
+        'tables'     => ['tl_room_type', 'tl_room_occupancy'],
         'icon'       => 'system/modules/room_reservation/assets/images/roomtypes16.png',
         'stylesheet' => 'system/modules/room_reservation/assets/css/layout.min.css',
         'javascript' => 'system/modules/room_reservation/assets/js/datepicker.js'
-    ),
-    'reservation_list' => array(
-        'tables' => array('tl_reservation_list'),
-        //'callback'     => 'ClassName',                                                                                                                     
+    ],
+    'room_list'   => [
+        'tables' => ['tl_room_list'],
         'icon'   => 'system/modules/room_reservation/assets/images/reservation_list16.png',
-        //'stylesheet'   => 'path/to/stylesheet.css',
-        //'javascript'   => 'path/to/javascript.js'
-    ),
-);
+    ],
+];
 
 $GLOBALS['FE_MOD']['reservation']['room_reservation'] = 'ModuleRoomReservation';
-$GLOBALS['TL_HOOKS']['replaceInsertTags'][]           = array('HookMyInsertTags', 'myReplaceInsertTags');
-$GLOBALS['TL_HOOKS']['parseBackendTemplate'][]        = array('HookMyBackendTemplate', 'myParseBackendTemplate');
-//$GLOBALS['TL_CSS'][]                                  = '/system/modules/room_reservation/assets/css/form.css';
-$GLOBALS['TL_MOOTOOLS'][] = '<script type="text/javascript">// <![CDATA[
-    $$("a").addEvent("click", function() {
-            $("overviewTable").toggleClass("invisible");
+$GLOBALS['TL_HOOKS']['replaceInsertTags'][]           = ['HooksRoomFrontend', 'myReplaceInsertTags'];
+$GLOBALS['TL_HOOKS']['parseBackendTemplate'][]        = ['HooksRoomBackend', 'myParseBackendTemplate'];
+$GLOBALS['TL_MOOTOOLS'][]                             = '<script type="text/javascript">// <![CDATA[
+    $("totalOverviewLink").addEvent("click", function() {
+            $("overviewRoomTable").toggleClass("invisible");
     });
     // ]]></script>';

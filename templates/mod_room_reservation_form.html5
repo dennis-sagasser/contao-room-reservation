@@ -1,0 +1,101 @@
+<!-- indexer::stop -->
+<?php if (TL_MODE === 'FE'): ?>
+    <?php $GLOBALS['TL_CSS']['room_reservation'] =
+        'system/modules/room_reservation/assets/css/bootstrap-button.min.css';
+    ?>
+<?php endif; ?>
+
+<div class="<?= $this->class; ?> block"<?= $this->cssID; ?>
+    <?php if ($this->style): ?> style="<?= $this->style; ?>"
+    <?php endif; ?>>
+
+    <?php $this->block('header'); ?>
+    <?php if ($this->headline): ?>
+    <<?= $this->hl; ?>><?= $this->headline; ?></<?= $this->hl; ?>>
+<?php endif; ?>
+<?php $this->endblock(); ?>
+
+<?php $this->block('message'); ?>
+<?php if ($this->errorMessage): ?>
+    <p class="error"><?= $this->errorMessage; ?></p>
+<?php endif; ?>
+<?php $this->endblock(); ?>
+
+<?php $this->block('overview'); ?>
+
+<?php if ($this->infoMessage): ?>
+    <div class="info">
+        <?= $this->infoMessage; ?><br><br><?= $this->priceMessage; ?>
+        <a id="totalOverviewLink" class="btn btn-default">
+            <?= $GLOBALS['TL_LANG']['MSC']['room_reservation']['showTotalOverview']; ?>
+        </a><br><br>
+        <table id="overviewRoomTable" class="invisible">
+            <thead>
+            <td>#</td>
+            <td><?= $GLOBALS['TL_LANG']['MSC']['room_reservation']['date']; ?></td>
+            <td><?= $GLOBALS['TL_LANG']['MSC']['room_reservation']['price']; ?></td>
+            <td><?= $GLOBALS['TL_LANG']['MSC']['room_reservation']['type']; ?></td>
+            </thead>
+            <tfoot>
+            <td colspan="4">
+                <small><br><?= $GLOBALS['TL_LANG']['MSC']['room_reservation']['inclusive']; ?></small>
+            </td>
+            </tfoot>
+            <?php if ($this->objSession) : ?>
+                <?php foreach ($this->objSession->get('arrOverview') as $type): ?>
+                    <?php foreach ($type as $row): ?>
+                        <tr>
+                            <td><?= ++$i; ?>.</td>
+                            <td>
+                                <?= date(\Config::get('dateFormat'), strtotime($row['date'])); ?>
+                            </td>
+                            <td><?= $row['price']; ?> €</td>
+                            <td><?= $row['roomtype']; ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </table>
+    </div>
+<?php endif; ?>
+
+<?php $this->endblock(); ?>
+
+<?php $this->block('form'); ?>
+<form action="<?= $this->action; ?>" id="availabilityRooms" method="post"
+      enctype="application/x-www-form-urlencoded">
+    <div class="formbody">
+        <?php if (TL_MODE === 'FE'): ?>
+            <input type="hidden" name="FORM_SUBMIT" value="form_availability_submit"/>
+            <input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}"/>
+        <?php endif; ?>
+        <?= $this->objWidgetArrival ? $this->objWidgetArrival->generateLabel() : ''; ?>
+        <?= $this->objWidgetArrival ? $this->objWidgetArrival->generateWithError() : ''; ?><br>
+
+        <?= $this->objWidgetDeparture ? $this->objWidgetDeparture->generateLabel() : ''; ?>
+        <?= $this->objWidgetDeparture ? $this->objWidgetDeparture->generateWithError() : ''; ?><br>
+
+        <?= $this->objWidgetCheckboxes ? $this->objWidgetCheckboxes->generateWithError() : ''; ?><br>
+
+        <?php if ($this->arrSelects): ?>
+
+            <?php foreach ($this->arrSelects as $select): ?>
+                <?= $select->validate(); ?>
+                <?= $select->generateLabel(); ?>
+                <?= $select->generateWithError(); ?><br>
+            <?php endforeach; ?><br>
+
+            <?= $this->objWidgetSubmit->generate(); ?>
+
+            <?php if ($this->infoMessage): ?>
+                <a class="btn btn-success" href="<?= $this->strReserveNowUrl ?>">
+                    <?= $GLOBALS['TL_LANG']['MSC']['room_reservation']['reserveNow']; ?>
+                </a>
+            <?php endif; ?>
+
+        <?php endif; ?>
+    </div>
+</form>
+<?php $this->endblock(); ?>
+</div>
+<!-- indexer::continue -->

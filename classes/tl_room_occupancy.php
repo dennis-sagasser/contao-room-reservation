@@ -30,6 +30,8 @@
  * @link      https://contao.org
  */
 
+namespace Contao;
+
 /**
  * Class ModuleRoomReservation
  *
@@ -42,19 +44,13 @@
  * @license   http://www.gnu.org/licenses/lgpl-3.0.html LGPL
  * @link      https://contao.org
  */
-
-/**
- * Class tl_room_occupancy
- *
- * @category  Contao
- * @package   RoomReservation
- * @author    Dennis Sagasser <sagasser@gispack.com>
- * @copyright 2014 Dennis Sagasser
- * @license   http://www.gnu.org/licenses/lgpl-3.0.html LGPL
- * @link      https://contao.org
- */
 class tl_room_occupancy extends \Backend
 {
+    /**
+     * @var object $objModuleModel Module model object
+     */
+    protected $objModuleModel = null;
+
     /**
      * Parent call of the constructor.
      *
@@ -62,6 +58,8 @@ class tl_room_occupancy extends \Backend
     public function __construct()
     {
         parent::__construct();
+
+        $this->objModuleModel = \ModuleModel::findByType('room_reservation');
     }
 
     /**
@@ -73,27 +71,55 @@ class tl_room_occupancy extends \Backend
      */
     public function generateCalendarWidget(DataContainer $dc)
     {
+        $intYear        = \Input::get('intYear');
+        $intCurrentYear = isset($intYear) ?
+            \Input::get('intYear') :
+            (int)\Date::parse('Y');
 
-        $intYear        = Input::get('intYear');
-        $intCurrentYear = isset($intYear) ? Input::get('intYear') : (int)Date::parse('Y');
-
-        $strHtmlYearCalendar = '<div><table class="calendarWidget">';
-        $strHtmlYearCalendar .= '<caption><h3><a href=' . Environment::get('requestUri') . '&intYear=' . ($intCurrentYear - 1) . '>«</a>&nbsp;' . $GLOBALS['TL_LANG']['tl_room_occupancy']['year'][0] . '&nbsp;' . $intCurrentYear . '&nbsp;<a href=' . Environment::get('uri') . '&intYear=' . ($intCurrentYear + 1) . '>»</a></h3></caption>';
+        $strBuffer = '<div><table class="calendarWidget">';
+        $strBuffer .= '<caption><h3>';
+        $strBuffer .= '<a href=' . \Environment::get('requestUri') . '&intYear=' . ($intCurrentYear - 1) . '>«</a>';
+        $strBuffer .= '&nbsp;' . $GLOBALS['TL_LANG']['tl_room_occupancy']['year'][0];
+        $strBuffer .= '&nbsp;' . $intCurrentYear . '&nbsp;';
+        $strBuffer .= '<a href=' . \Environment::get('uri') . '&intYear=' . ($intCurrentYear + 1) . '>»</a>';
+        $strBuffer .= '</h3></caption>';
 
         $intCurrentMonth = 0;
-        $intParentId     = $dc->activeRecord->pid;
+        $intParentId     = intval($dc->activeRecord->pid);
+
+        $strCountSrc = 'system/modules/room_reservation/assets/images/count16.png';
+        $strPriceSrc = 'system/modules/room_reservation/assets/images/price16.png';
+        $strMlsSrc   = 'system/modules/room_reservation/assets/images/mls16.png';
+
+        $strCountAlt = $GLOBALS['TL_LANG']['tl_room_occupancy']['countAlt'];
+        $strPriceAlt = $GLOBALS['TL_LANG']['tl_room_occupancy']['priceAlt'];
+        $strMlsAlt   = $GLOBALS['TL_LANG']['tl_room_occupancy']['mlsAlt'];
+
+        $strCountAttr = 'title="' . $GLOBALS['TL_LANG']['tl_room_occupancy']['countTitle'] . '"';
+        $strPriceAttr = 'title="' . $GLOBALS['TL_LANG']['tl_room_occupancy']['priceTitle'] . '"';
+        $strMlsAttr   = 'title="' . $GLOBALS['TL_LANG']['tl_room_occupancy']['mlsTitle'] . '"';
+
+        $strCount = \Image::getHtml($strCountSrc, $strCountAlt, $strCountAttr);
+        $strPrice = \Image::getHtml($strPriceSrc, $strPriceAlt, $strPriceAttr);
+        $strMls   = \Image::getHtml($strMlsSrc, $strMlsAlt, $strMlsAttr);
 
         while ($intCurrentMonth < 12) {
             $strMonthNameShort = $GLOBALS['TL_LANG']['MONTHS_SHORT'][$intCurrentMonth];
-            $strHtmlYearCalendar .= '<tr>';
-            $strHtmlYearCalendar .= '<td class="shortMonthColumn"><span class="shortMonthName">' . $strMonthNameShort . '</span><br><br>Anz.<br>TP<br>MLS</td>';
-            $strHtmlYearCalendar .= $this->datesMonth(++$intCurrentMonth, $intCurrentYear, $intParentId);
-            $strHtmlYearCalendar .= '</tr>';
+
+            $strBuffer .= '<tr>';
+            $strBuffer .= '<td class="shortMonthColumn">';
+            $strBuffer .= '<div class="shortMonthName">' . $strMonthNameShort . '</div><br>';
+            $strBuffer .= $strCount;
+            $strBuffer .= $strPrice;
+            $strBuffer .= $strMls;
+            $strBuffer .= $this->datesMonth(++$intCurrentMonth, $intCurrentYear, $intParentId);
+            $strBuffer .= '</td>';
+            $strBuffer .= '</tr>';
         }
 
-        $strHtmlYearCalendar .= '</table></div>';
+        $strBuffer .= '</table></div>';
 
-        return $strHtmlYearCalendar;
+        return $strBuffer;
     }
 
     /**
@@ -115,74 +141,108 @@ class tl_room_occupancy extends \Backend
             $strCurrentDay  = str_pad($i, 2, "0", STR_PAD_LEFT);
             $strCurrentDate = $intYear . '-' . $strCurrentMonth . '-' . $strCurrentDay;
 
-            $objDbSelectResult = $this->Database->prepare("   
+            $objWidgetDate           = new \FormTextField();
+            $objWidgetDate->value    = $strCurrentDate;
+            $objWidgetDate->name     = $strCurrentDate . '[date]';
+            $objWidgetDate->disabled = $strCurrentDate === date('Y-m-d') ? '' : 'disabled';
+            $objWidgetDate->style    = 'display:none';
+
+            $objCounts = $this->Database->prepare("   
                 SELECT  count, price, mls
                 FROM    tl_room_occupancy 
                 WHERE   date=? 
                 AND     pid=?")
                 ->execute($strCurrentDate, $intParentId);
 
-            $mktime          = mktime(0, 0, 0, $intMonth, $i, $intYear);
-            $intWeekDay      = date("w", $mktime);
+            $objWidgetCount            = new \FormTextField();
+            $objWidgetCount->id        = 'count_' . $strCurrentDate;
+            $objWidgetCount->class     = empty($objCounts->count) ? 'emptyInput' : 'filledInput';
+            $objWidgetCount->value     = $objCounts->count;
+            $objWidgetCount->name      = $strCurrentDate . '[count]';
+            $objWidgetCount->maxlength = 2;
+            $objWidgetCount->disabled  = ($strCurrentDate === date('Y-m-d')) ? false : true;
+
+            $objWidgetPrice            = new \FormTextField();
+            $objWidgetPrice->id        = 'price_' . $strCurrentDate;
+            $objWidgetPrice->class     = empty($objCounts->price) ? 'emptyInput' : 'filledInput';
+            $objWidgetPrice->value     = $objCounts->price;
+            $objWidgetPrice->name      = $strCurrentDate . '[price]';
+            $objWidgetPrice->maxlength = 2;
+            $objWidgetPrice->disabled  = ($strCurrentDate === date('Y-m-d')) ? false : true;
+
+            $objWidgetMls            = new \FormTextField();
+            $objWidgetMls->id        = 'mls_' . $strCurrentDate;
+            $objWidgetMls->class     = empty($objCounts->mls) ? 'emptyInput' : 'filledInput';
+            $objWidgetMls->value     = $objCounts->mls;
+            $objWidgetMls->name      = $strCurrentDate . '[mls]';
+            $objWidgetMls->maxlength = 2;
+            $objWidgetMls->disabled  = ($strCurrentDate === date('Y-m-d')) ? false : true;
+
+            $intMktime       = mktime(0, 0, 0, $intMonth, $i, $intYear);
+            $intWeekDay      = date("w", $intMktime);
             $strWeekDayShort = $GLOBALS['TL_LANG']['DAYS_SHORT'][$intWeekDay];
 
-            $strHtmlYearCalendar .= '<td id="' . $strCurrentDate . '" class="tdCalendarDay">';
-            $strHtmlYearCalendar .= '<div class="toggleInputDiv ' . ($strCurrentDate === date('Y-m-d') ? 'active' : '') . '"><div class="dayOfWeek">' . $strWeekDayShort . '</div>';
-            $strHtmlYearCalendar .= '<div class="dayOfMonth">' . $i . '</div></div>
-                <input id="ctrl_date_' . $strCurrentDate . '" type="hidden" value="' . $strCurrentDate . '" name="' . $strCurrentDate . '[date]" ' . ($strCurrentDate === date('Y-m-d') ? '' : 'disabled') . '>    
-                <input id="ctrl_count_' . $strCurrentDate . '" type="text" value="' . $objDbSelectResult->count . '" name="' . $strCurrentDate . '[count]" maxlength="2" ' . ($strCurrentDate === date('Y-m-d') ? '' : 'disabled') . ' class="' . ($classInput = ($objDbSelectResult->count < 1) ? 'emptyInput' : 'filledInput') . '">
-                <input id="ctrl_price_' . $strCurrentDate . '" type="text" value="' . $objDbSelectResult->price . '" name="' . $strCurrentDate . '[price]" maxlength="6" ' . ($strCurrentDate === date('Y-m-d') ? '' : 'disabled') . ' class="' . ($classInput = ($objDbSelectResult->price < 1) ? 'emptyInput' : 'filledInput') . '">
-                <input id="ctrl_mls_' . $strCurrentDate . '" type="text" value="' . $objDbSelectResult->mls . '" name="' . $strCurrentDate . '[mls]" maxlength="2" ' . ($strCurrentDate === date('Y-m-d') ? '' : 'disabled') . ' class="' . ($classInput = ($objDbSelectResult->mls < 1) ? 'emptyInput' : 'filledInput') . '"></td>
-            ';
+            $strBuffer .= '<td id="' . $strCurrentDate . '" class="tdCalendarDay">';
+            $strBuffer .= '<div class="toggleInputDiv ';
+            $strBuffer .= ($strCurrentDate === date('Y-m-d') ? 'active' : '') . '">';
+            $strBuffer .= '<div class="dayOfWeek">' . $strWeekDayShort . '</div>';
+            $strBuffer .= '<div class="dayOfMonth">' . $i . '</div></div>';
 
-            if (Input::post('FORM_SUBMIT') == 'tl_room_occupancy') {
-
-                if (Input::post('showPeriodOptions') && $mktime >= strtotime(Input::post('startDate')) && $mktime <= strtotime(Input::post('endDate'))) {
-
-                    $postDate          = array();
-                    $postDate['date']  = $strCurrentDate;
-                    $postDate['count'] = Input::post('count');
-                    $postDate['price'] = Input::post('price');
-                    $postDate['mls']   = Input::post('mls');
-
-                } else {
-
-                    $postDate = Input::post($strCurrentDate);
-
-                }
-
-                if ($postDate['date'] !== null && $objDbSelectResult->numRows > 0) {
-
-                    $objDbResult = $this->Database->prepare("
-                        UPDATE  tl_room_occupancy
-                        SET     pid=?, tstamp=?, date=?, count=?, price=?, mls=?
-                        WHERE   date=?
-                        AND     pid=?")
-                        ->execute($intParentId,
-                            time(),
-                            $strCurrentDate,
-                            $postDate['count'],
-                            $postDate['price'],
-                            $postDate['mls'],
-                            $postDate['date'],
-                            $intParentId);
-                }
-
-                if ($postDate['date'] !== null && $objDbSelectResult->numRows < 1) {
-
-                    $objDbResult = $this->Database->prepare("
-                        INSERT INTO tl_room_occupancy (pid, tstamp, date, count, price, mls)
-                        VALUES(?,?,?,?,?,?)")
-                        ->execute($intParentId,
-                            time(),
-                            $strCurrentDate,
-                            $postDate['count'],
-                            $postDate['price'],
-                            $postDate['mls']);
-                }
+            $strBuffer .= $objWidgetDate->generate();
+            $strBuffer .= $objWidgetCount->generate() . $objWidgetPrice->generate() . $objWidgetMls->generate();
+            if (\Input::post('FORM_SUBMIT') == 'tl_room_occupancy') {
+                $this->saveData($intMktime, $strCurrentDate, $objCounts, $intParentId);
             }
         }
-        return $strHtmlYearCalendar;
+        return $strBuffer;
+    }
+
+    /**
+     * Stores the calendar form data in the database.
+     *
+     * @param int $intMktime Timestamp begin of current day
+     * @param string $strCurrentDate Current date string in SQL format
+     * @param object $objCounts Counts of seats for current day
+     * @param int $intParentId Id of the parent category
+     *
+     */
+    public function saveData($intMktime, $strCurrentDate, $objCounts, $intParentId)
+    {
+        $arrPostDate           = [];
+        $arrPostDate['pid']    = $intParentId;
+        $arrPostDate['tstamp'] = time();
+
+        if (\Input::post('showPeriodOptions') &&
+            $intMktime >= strtotime(\Input::post('startDate')) &&
+            $intMktime <= strtotime(\Input::post('endDate'))
+        ) {
+            $arrPostDate['date'] = $strCurrentDate;
+
+            $arrPostDate['count'] = \Input::post('count');
+            $arrPostDate['price'] = \Input::post('price');
+            $arrPostDate['mls']   = \Input::post('mls');
+        } else {
+            $mixedPostDate = \Input::post($strCurrentDate);
+            if (is_array($mixedPostDate)) {
+                $arrPostDate = array_merge($mixedPostDate, $arrPostDate);
+            }
+        }
+
+        if ($arrPostDate['date'] !== null && $objCounts->numRows > 0) {
+            $objUpdate = $this->Database->prepare("
+                UPDATE tl_room_occupancy
+                %s 
+                WHERE date=? 
+                AND pid=?")
+                ->set($arrPostDate)
+                ->execute($strCurrentDate, $intParentId);
+        }
+
+        if ($arrPostDate['date'] !== null && $objCounts->numRows < 1) {
+            $objInsert = $this->Database->prepare("INSERT INTO tl_room_occupancy %s")
+                ->set($arrPostDate)
+                ->execute();
+        }
     }
 
     /**

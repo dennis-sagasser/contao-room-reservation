@@ -15,16 +15,18 @@
 ClassLoader::addClasses(array
 (
 	// Modules
-	'Contao\ModuleRoomReservation' => 'system/modules/room_reservation/modules/ModuleRoomReservation.php',
+	'Contao\ModuleRoomReservation'      => 'system/modules/room_reservation/modules/ModuleRoomReservation.php',
 
 	// Classes
-	'tl_room_occupancy'            => 'system/modules/room_reservation/classes/tl_room_occupancy.php',
-	'tl_roomtype'                  => 'system/modules/room_reservation/classes/tl_roomtype.php',
-	'tl_reservation_settings'      => 'system/modules/room_reservation/classes/tl_reservation_settings.php',
+	'Contao\tl_module_room_reservation' => 'system/modules/room_reservation/classes/tl_module_room_reservation.php',
+	'Contao\tl_room_list'               => 'system/modules/room_reservation/classes/tl_room_list.php',
+	'Contao\tl_room_settings'           => 'system/modules/room_reservation/classes/tl_room_settings.php',
+	'Contao\tl_room_type'               => 'system/modules/room_reservation/classes/tl_room_type.php',
+	'Contao\tl_room_occupancy'          => 'system/modules/room_reservation/classes/tl_room_occupancy.php',
 
 	// Library
-	'Contao\HookMyBackendTemplate' => 'system/modules/room_reservation/library/RoomReservation/HookMyBackendTemplate.php',
-	'Contao\HookMyInsertTags'      => 'system/modules/room_reservation/library/RoomReservation/HookMyInsertTags.php',
+	'Contao\HooksRoomBackend'           => 'system/modules/room_reservation/library/RoomReservation/HooksRoomBackend.php',
+	'Contao\HooksRoomFrontend'          => 'system/modules/room_reservation/library/RoomReservation/HooksRoomFrontend.php',
 ));
 
 
@@ -33,5 +35,7 @@ ClassLoader::addClasses(array
  */
 TemplateLoader::addFiles(array
 (
-	'mod_reservation_form' => 'system/modules/room_reservation/templates',
+	'mod_room_reservation_form_page2'   => 'system/modules/room_reservation/templates',
+	'mod_room_reservation_form'         => 'system/modules/room_reservation/templates',
+	'mod_room_reservation_form_success' => 'system/modules/room_reservation/templates',
 ));

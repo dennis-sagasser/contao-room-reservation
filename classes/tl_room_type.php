@@ -30,8 +30,10 @@
  * @link      https://contao.org
  */
 
+namespace Contao;
+
 /**
- * Class tl_roomtype
+ * Class tl_room_type
  *
  * Provide miscellaneous methods that are used by the data configuration array.
  *
@@ -42,7 +44,7 @@
  * @license   http://www.gnu.org/licenses/lgpl-3.0.html LGPL
  * @link      https://contao.org
  */
-class tl_roomtype extends Backend
+class tl_room_type extends \Backend
 {
     /**
      * Changes appearance of Toggle-Buttons.
@@ -66,7 +68,7 @@ class tl_roomtype extends Backend
         }
 
         // Check permissions AFTER checking the tid, so hacking attempts are logged
-        if (!$this->User->isAdmin && !$this->User->hasAccess('tl_roomtype::published', 'alexf')) {
+        if (!$this->User->isAdmin && !$this->User->hasAccess('tl_room_type::published', 'alexf')) {
             return '';
         }
 
@@ -90,25 +92,25 @@ class tl_roomtype extends Backend
     public function toggleVisibility($intId, $blnPublished)
     {
         // Check permissions to publish
-        if (!$this->User->isAdmin && !$this->User->hasAccess('tl_roomtype::published', 'alexf')) {
-            $this->log('Not enough permissions to show/hide record ID "' . $intId . '"', 'tl_roomtype toggleVisibility', TL_ERROR);
+        if (!$this->User->isAdmin && !$this->User->hasAccess('tl_room_type::published', 'alexf')) {
+            $this->log('Not enough permissions to show/hide record ID "' . $intId . '"', 'tl_room_type toggleVisibility', TL_ERROR);
             $this->redirect('contao/main.php?act=error');
         }
 
-        $this->createInitialVersion('tl_roomtype', $intId);
+        $this->createInitialVersion('tl_room_type', $intId);
 
         // Trigger the save_callback
-        if (is_array($GLOBALS['TL_DCA']['tl_roomtype']['fields']['published']['save_callback'])) {
-            foreach ($GLOBALS['TL_DCA']['tl_roomtype']['fields']['published']['save_callback'] as $callback) {
+        if (is_array($GLOBALS['TL_DCA']['tl_room_type']['fields']['published']['save_callback'])) {
+            foreach ($GLOBALS['TL_DCA']['tl_room_type']['fields']['published']['save_callback'] as $callback) {
                 $this->import($callback[0]);
                 $blnPublished = $this->$callback[0]->$callback[1]($blnPublished, $this);
             }
         }
 
         // Update the database
-        $this->Database->prepare("UPDATE tl_roomtype SET tstamp=" . time() . ", published='" . ($blnPublished ? '' : '1') . "' WHERE id=?")
+        $this->Database->prepare("UPDATE tl_room_type SET tstamp=" . time() . ", published='" . ($blnPublished ? '' : '1') . "' WHERE id=?")
             ->execute($intId);
-        $this->createNewVersion('tl_roomtype', $intId);
+        $this->createNewVersion('tl_room_type', $intId);
     }
 }    
 

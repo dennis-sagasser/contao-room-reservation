@@ -33,7 +33,7 @@
 namespace Contao;
 
 /**
- * Class HookMyBackendTemplate
+ * Class HooksRoomBackend
  *
  * Parses the backend template and replaces the back link.
  *
@@ -44,7 +44,7 @@ namespace Contao;
  * @license   http://www.gnu.org/licenses/lgpl-3.0.html LGPL
  * @link      https://contao.org
  */
-class HookMyBackendTemplate extends \Backend
+class HooksRoomBackend extends \Backend
 {
     /**
      * Replaces the back link.
@@ -56,7 +56,7 @@ class HookMyBackendTemplate extends \Backend
      */
     public function myParseBackendTemplate($strBuffer, $strTemplate)
     {
-        if ($strTemplate == 'be_main' && (\Input::get("do") === 'config')) {
+        if ($strTemplate == 'be_main' && (\Input::get("do") === 'room_config')) {
             $strBuffer = preg_replace(
                 '/<a href=(.*?) class=\"header_back\"/',
                 '<a href="javascript:history.back()" class="header_back"',

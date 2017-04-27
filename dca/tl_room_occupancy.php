@@ -46,175 +46,148 @@
 /**
  * Table tl_room_occupancy
  */
-$GLOBALS['TL_DCA']['tl_room_occupancy'] = array
-(
+$GLOBALS['TL_DCA']['tl_room_occupancy'] = [
     // Config
-    'config'      => array
-    (
+    'config'      => [
         'dataContainer'    => 'Table',
-        'ptable'           => 'tl_roomtype',
+        'ptable'           => 'tl_room_type',
         'switchToEdit'     => false,
         'enableVersioning' => false,
-        'sql'              => array
-        (
-            'keys' => array
-            (
+        'sql'              => [
+            'keys' => [
                 'id'  => 'primary',
                 'pid' => 'index'
-            )
-        ),
-        'onload_callback'  => array
-        (
-            array('tl_room_occupancy', 'checkDate'),
-        ),
-    ),
+            ]
+        ],
+        'onload_callback'  => [
+            ['tl_room_occupancy', 'checkDate'],
+        ],
+    ],
     // List
-    'list'        => array
-    (
-        'sorting' => array
-        (
+    'list'        => [
+        'sorting' => [
             'mode'                  => 4,
-            'headerFields'          => array('roomtype', 'published'),
+            'headerFields'          => ['roomtype', 'published'],
             'panelLayout'           => 'filter,limit;search,sort',
-            'fields'                => array('date ASC'),
-            'child_record_callback' => array('tl_room_occupancy', 'showCalendar'),
-        ),
-    ),
+            'fields'                => ['date DESC'],
+            'child_record_callback' => ['tl_room_occupancy', 'showCalendar'],
+        ],
+    ],
     // Palettes
-    'palettes'    => array
-    (
-        '__selector__' => array('showPeriodOptions'),
+    'palettes'    => [
+        '__selector__' => ['showPeriodOptions'],
         'default'      => '{date_legend},showPeriodOptions;{calendar_legend},calendar'
-    ),
+    ],
     // Subpalettes
-    'subpalettes' => array
-    (
+    'subpalettes' => [
         'showPeriodOptions' => 'startDate,endDate,count,price,mls'
-    ),
+    ],
 
     // Fields
-    'fields'      => array
-    (
-        'id'                => array
-        (
+    'fields'      => [
+        'id'                => [
             'sql' => "int(10) unsigned NOT NULL auto_increment"
-        ),
-        'pid'               => array
-        (
-            'foreignKey' => 'tl_roomtype.roomtype',
+        ],
+        'pid'               => [
+            'foreignKey' => 'tl_room_type.roomtype',
             'sql'        => "int(10) unsigned NOT NULL default '0'",
-            'relation'   => array('type' => 'belongsTo', 'load' => 'eager')
-        ),
-        'tstamp'            => array
-        (
+            'relation'   => ['type' => 'belongsTo', 'load' => 'eager']
+        ],
+        'tstamp'            => [
             'default' => time(),
             'sql'     => "int(10) unsigned NOT NULL default '0'"
-        ),
-        'showPeriodOptions' => array
-        (
+        ],
+        'showPeriodOptions' => [
             'label'     => &$GLOBALS['TL_LANG']['tl_room_occupancy']['showPeriodOptions'],
             'exclude'   => false,
             'inputType' => 'checkbox',
-            'eval'      => array('mandatory' => false, 'isBoolean' => true, 'submitOnChange' => true),
+            'eval'      => ['mandatory' => false, 'isBoolean' => true, 'submitOnChange' => true],
             'sql'       => "char(1) NOT NULL default ''"
-        ),
-        'startDate'         => array
-        (
+        ],
+        'startDate'         => [
             'label'         => &$GLOBALS['TL_LANG']['tl_room_occupancy']['startDate'],
             'inputType'     => 'text',
-            'eval'          => array
-            (
+            'eval'          => [
                 'doNotSaveEmpty' => true,
                 'rgxp'           => 'date',
                 'doNotCopy'      => true,
                 'datepicker'     => true,
                 'tl_class'       => 'w50 wizard',
                 'mandatory'      => true
-            ),
+            ],
             'sql'           => "int(10) unsigned NULL",
-            'load_callback' => array
-            (
-                array('tl_room_occupancy', 'loadDate'),
-            ),
-            'save_callback' => array
-            (
-                array('tl_room_occupancy', 'doNotSaveDate'),
-            ),
-        ),
-        'endDate'           => array
-        (
+            'load_callback' => [
+                ['tl_room_occupancy', 'loadDate'],
+            ],
+            'save_callback' => [
+                ['tl_room_occupancy', 'doNotSaveDate'],
+            ],
+        ],
+        'endDate'           => [
             'label'         => &$GLOBALS['TL_LANG']['tl_room_occupancy']['endDate'],
             'inputType'     => 'text',
-            'eval'          => array
-            (
+            'eval'          => [
                 'doNotSaveEmpty' => true,
                 'rgxp'           => 'date',
                 'doNotCopy'      => true,
                 'datepicker'     => true,
                 'tl_class'       => 'w50 wizard',
                 'mandatory'      => true
-            ),
+            ],
             'sql'           => "int(10) unsigned NULL",
-            'save_callback' => array
-            (
-                array('tl_room_occupancy', 'doNotSaveDate'),
-            ),
-        ),
-        'date'              => array
-        (
+            'save_callback' => [
+                ['tl_room_occupancy', 'doNotSaveDate'],
+            ],
+        ],
+        'date'              => [
             'label'     => &$GLOBALS['TL_LANG']['tl_room_occupancy']['date'],
             'default'   => date('Y-m-d'),
             'inputType' => 'text',
+            'filter'    => true,
             'search'    => true,
             'sorting'   => true,
-            'eval'      => array
-            (
+            'eval'      => [
                 'rgxp'       => 'date',
                 'doNotCopy'  => true,
                 'datepicker' => true,
                 'tl_class'   => 'w50 wizard'
-            ),
+            ],
             'sql'       => "date NOT NULL"
-        ),
-        'count'             => array
-        (
+        ],
+        'count'             => [
             'label'     => &$GLOBALS['TL_LANG']['tl_room_occupancy']['count'],
             'default'   => 0,
             'inputType' => 'text',
             'search'    => true,
             'sorting'   => true,
             'filter'    => true,
-            'eval'      => array('rgxp' => 'digit', 'tl_class' => 'w50'),
+            'eval'      => ['rgxp' => 'digit', 'tl_class' => 'w50'],
             'sql'       => "smallint(3) unsigned NULL"
-        ),
-        'price'             => array
-        (
+        ],
+        'price'             => [
             'label'     => &$GLOBALS['TL_LANG']['tl_room_occupancy']['price'],
             'default'   => 0,
             'inputType' => 'text',
             'search'    => true,
             'sorting'   => true,
             'filter'    => true,
-            'eval'      => array('rgxp' => 'digit', 'tl_class' => 'w50'),
+            'eval'      => ['rgxp' => 'digit', 'tl_class' => 'w50'],
             'sql'       => "smallint(4) unsigned NULL"
-        ),
-        'mls'               => array
-        (
+        ],
+        'mls'               => [
             'label'     => &$GLOBALS['TL_LANG']['tl_room_occupancy']['mls'],
             'default'   => 0,
             'inputType' => 'text',
             'search'    => true,
             'sorting'   => true,
             'filter'    => true,
-            'eval'      => array('rgxp' => 'digit', 'tl_class' => 'w50'),
+            'eval'      => ['rgxp' => 'digit', 'tl_class' => 'w50'],
             'sql'       => "smallint(3) unsigned NULL"
-        ),
-        'calendar'          => array
-        (
-            'input_field_callback' => array
-            (
+        ],
+        'calendar'          => [
+            'input_field_callback' => [
                 'tl_room_occupancy', 'generateCalendarWidget'
-            ),
-        ),
-    )
-);
+            ],
+        ],
+    ]
+];

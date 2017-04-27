@@ -1,0 +1,60 @@
+<!-- indexer::stop -->
+<?php $this->extend('mod_room_reservation_form'); ?>
+
+<?php $this->block('header'); ?>
+<?php $this->parent(); ?>
+<?php $this->endblock(); ?>
+
+<?php $this->block('overview') ?>
+<?php $this->parent(); ?>
+<?php $this->endblock(); ?>
+
+<?php $this->block('form') ?>
+
+<form action="<?= $this->action; ?>" id="roomReservation" method="post" enctype="application/x-www-form-urlencoded">
+    <div class="formbody">
+        <input type="hidden" name="FORM_SUBMIT" value="form_reservation_submit"/>
+        <input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}"/>
+
+        <?= $this->objWidgetSalutation->generateWithError(); ?><br>
+
+        <?= $this->objWidgetFirstName->generateLabel(); ?>
+        <?= $this->objWidgetFirstName->generateWithError(); ?><br>
+
+        <?= $this->objWidgetLastName->generateLabel(); ?>
+        <?= $this->objWidgetLastName->generateWithError(); ?><br>
+
+        <?= $this->objWidgetStreet->generateLabel(); ?>
+        <?= $this->objWidgetStreet->generateWithError(); ?><br>
+
+        <?= $this->objWidgetPostCode->generateLabel(); ?>
+        <?= $this->objWidgetPostCode->generateWithError(); ?> /
+        <?= $this->objWidgetCity->generateWithError(); ?><br>
+
+        <?= $this->objWidgetCountry->generateLabel(); ?>
+        <?= $this->objWidgetCountry->generateWithError(); ?><br>
+
+        <?= $this->objWidgetEmail->generateLabel(); ?>
+        <?= $this->objWidgetEmail->generateWithError(); ?><br>
+
+        <?= $this->objWidgetPhone->generateLabel(); ?>
+        <?= $this->objWidgetPhone->generateWithError(); ?><br>
+
+        <?= $this->objWidgetPhone->generateLabel(); ?>
+        <?= $this->objWidgetPhone->generateWithError(); ?><br>
+
+        <?= $this->objWidgetRemarks->generateLabel(); ?>
+        <?= $this->objWidgetRemarks->generateWithError(); ?><br>
+
+        <?= $this->objWidgetCaptcha->generateLabel(); ?>
+        <?= $this->objWidgetCaptcha->generateQuestion(); ?>
+        <?= $this->objWidgetCaptcha->generateWithError(); ?><br>
+
+        <?= $this->objWidgetConfirmation->generateWithError(); ?><br><br>
+
+        <?= $this->objWidgetSubmit->generate(); ?>
+    </div>
+</form>
+
+<?php $this->endblock(); ?>
+<!-- indexer::continue -->

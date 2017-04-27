@@ -27,15 +27,15 @@
 
 .emptyInput {
     border: 1px solid red;
-    width: 15px;
-    height: 10px;
+    width: 16px;
+    height: 16px;
     font-size: 9px
 }
 
 .filledInput {
     border: 1px solid #555;
-    width: 15px;
-    height: 10px;
+    width: 16px;
+    height: 16px;
     font-size: 9px
 }
 
@@ -63,7 +63,7 @@
 
 #tl_room_occupancy > .tl_formbody_edit {
     overflow-x: auto;
-    margin: 0px 18px;
-    padding-left: 0px;
+    margin: 0 18px;
+    padding-left: 0;
 }
 

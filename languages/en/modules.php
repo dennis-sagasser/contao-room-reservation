@@ -30,12 +30,9 @@
  * @link      https://contao.org
  */
 
-$GLOBALS['TL_LANG']['MOD']['room_reservation'][0] = 'Room Reservation';
-$GLOBALS['TL_LANG']['MOD']['config'][0]           = 'Settings';
-$GLOBALS['TL_LANG']['MOD']['config'][1]           = 'General settings';
-$GLOBALS['TL_LANG']['MOD']['roomtypes'][0]        = 'Room types';
-$GLOBALS['TL_LANG']['MOD']['roomtypes'][1]        = 'Manage room types';
-$GLOBALS['TL_LANG']['MOD']['reservation_list'][0] = 'Reservation list';
-$GLOBALS['TL_LANG']['MOD']['reservation_list'][1] = 'View reservation list';
-$GLOBALS['TL_LANG']['FMD']['reservation']         = 'Room reservation';
-$GLOBALS['TL_LANG']['FMD']['room_reservation']    = array('Room reservation form', 'Provides the form for room reservation.');
+$GLOBALS['TL_LANG']['MOD']['room_reservation'] = ['Room Reservation', ''];
+$GLOBALS['TL_LANG']['MOD']['room_config']      = ['Settings', 'Email settings'];
+$GLOBALS['TL_LANG']['MOD']['room_types']       = ['Room types', 'Manage room types'];
+$GLOBALS['TL_LANG']['MOD']['room_list']        = ['Reservation list', 'View reservation list'];
+$GLOBALS['TL_LANG']['FMD']['reservation']      = 'Room reservation';
+$GLOBALS['TL_LANG']['FMD']['room_reservation'] = ['Room reservation form', 'Provides the form for room reservation.'];

@@ -33,14 +33,20 @@
 /**
  * Fields
  */
-$GLOBALS['TL_LANG']['tl_room_occupancy']['showPeriodOptions'] = array('Activate period of time', 'Activate the option to edit several days at the same time. Caution: Already stored data will be overwritten.');
-$GLOBALS['TL_LANG']['tl_room_occupancy']['startDate']         = array('Start date', 'Please enter the start date according to the global date format.');
-$GLOBALS['TL_LANG']['tl_room_occupancy']['date']              = array('Date', '');
-$GLOBALS['TL_LANG']['tl_room_occupancy']['endDate']           = array('End date', 'Please enter the end date according to the global date format.');
-$GLOBALS['TL_LANG']['tl_room_occupancy']['count']             = array('Room count', 'The number of available rooms');
-$GLOBALS['TL_LANG']['tl_room_occupancy']['price']             = array('Daily price', 'Specify the daily price.');
-$GLOBALS['TL_LANG']['tl_room_occupancy']['mls']               = array('Minimum length of stay', 'Minimum length of stay');
-$GLOBALS['TL_LANG']['tl_room_occupancy']['year']              = array('Year', '');
+$GLOBALS['TL_LANG']['tl_room_occupancy']['showPeriodOptions'] = ['Activate period of time', 'Activate the option to edit several days at the same time. Caution: Already stored data will be overwritten.'];
+$GLOBALS['TL_LANG']['tl_room_occupancy']['startDate']         = ['Start date', 'Please enter the start date according to the global date format.'];
+$GLOBALS['TL_LANG']['tl_room_occupancy']['date']              = ['Date', ''];
+$GLOBALS['TL_LANG']['tl_room_occupancy']['endDate']           = ['End date', 'Please enter the end date according to the global date format.'];
+$GLOBALS['TL_LANG']['tl_room_occupancy']['count']             = ['Room count', 'The number of available rooms'];
+$GLOBALS['TL_LANG']['tl_room_occupancy']['price']             = ['Daily price', 'Specify the daily price.'];
+$GLOBALS['TL_LANG']['tl_room_occupancy']['mls']               = ['Minimum length of stay', 'Minimum length of stay'];
+$GLOBALS['TL_LANG']['tl_room_occupancy']['year']              = ['Year', ''];
+$GLOBALS['TL_LANG']['tl_room_occupancy']['countAlt']          = 'Number of rooms';
+$GLOBALS['TL_LANG']['tl_room_occupancy']['countTitle']        = 'Number of available rooms';
+$GLOBALS['TL_LANG']['tl_room_occupancy']['priceAlt']          = 'Daily price';
+$GLOBALS['TL_LANG']['tl_room_occupancy']['priceTitle']        = 'Daily price in Euro';
+$GLOBALS['TL_LANG']['tl_room_occupancy']['mlsAlt']            = 'Minimum Length of Stay';
+$GLOBALS['TL_LANG']['tl_room_occupancy']['mlsTitle']          = 'Minimum Length of Stay in days';
 
 /**
  * Legends
@@ -55,5 +61,5 @@ $GLOBALS['TL_LANG']['tl_room_occupancy']['calendar_legend'] = 'Annual calendar';
 /**
  * Buttons
  */
-$GLOBALS['TL_LANG']['tl_room_occupancy']['new'] = array('Edit occupancy', 'Open the calendar for the room occupancy.');
-$GLOBALS['TL_LANG']['MSC']['editRecord']        = 'Edit occupancy'; 
+$GLOBALS['TL_LANG']['tl_room_occupancy']['new']              = ['Edit occupancy', 'Open the calendar for the room occupancy.'];
+$GLOBALS['TL_LANG']['MSC']['room_reservation']['editRecord'] = 'Edit occupancy';

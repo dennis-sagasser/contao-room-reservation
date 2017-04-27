@@ -30,8 +30,10 @@
  * @link      https://contao.org
  */
 
+namespace Contao;
+
 /**
- * Class tl_reservation_settings
+ * Class tl_room_settings
  *
  * Provide miscellaneous methods that are used by the data configuration array.
  *
@@ -42,7 +44,7 @@
  * @license   http://www.gnu.org/licenses/lgpl-3.0.html LGPL
  * @link      https://contao.org
  */
-class tl_reservation_settings extends Backend
+class tl_room_settings extends \Backend
 {
 
     /**
@@ -61,7 +63,7 @@ class tl_reservation_settings extends Backend
      */
     public function checkConfig()
     {
-        $objConfig = Database::getInstance()->prepare("SELECT * FROM tl_reservation_settings")->execute();
+        $objConfig = Database::getInstance()->prepare("SELECT * FROM tl_room_settings")->execute();
 
         if (Input::get('key')) {
             return;
